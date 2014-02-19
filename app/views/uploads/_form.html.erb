@@ -1,0 +1,57 @@
+<%= form_for(@upload, { multipart: true }) do |f| %>
+  <% if @upload.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@upload.errors.count, "error") %> prohibited this upload from being saved:</h2>
+
+      <ul>
+      <% @upload.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br />
+    <%= f.text_field :name %>
+  </div>
+
+  <% if f.object.linked_files.size == 0 -%>
+
+    <div class="field">
+      <%= f.label :files %><br />
+      <%= f.file_field :files, :multiple => true %>
+    </div>
+
+  <% else -%>
+
+    <fieldset>
+      <legend>Linked Files</legend>
+      <%= f.fields_for :linked_files do |lff| -%>
+        <div class="field">
+          <%= lff.label :filename %><br />
+          <%= lff.text_field :filename %>
+        </div>
+        <div class="field">
+          <%= lff.label :mime_type %><br />
+          <%= lff.text_field :mime_type %>
+        </div>
+        <div class="field">
+          <%= lff.label :file, 'File (replaces current selection)' %><br />
+          <%= lff.file_field :file %>
+          <%= lff.hidden_field :file_cache %>
+        </div>
+        <div class="field">
+          <%= lff.check_box :_destroy %>
+          Remove this file
+        </div>
+        <hr />
+      <% end -%>
+    </fieldset>
+
+  <% end -%>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
