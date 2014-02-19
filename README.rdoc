@@ -3,3 +3,5 @@
 This app shows the bare minimum needed to easily use an HTML5 file input
 field with multiple files to upload to a Carrierwave back end.  Run as a
 server and access /uploads to play with the application.
+
+This code is released as Public Domain.  Do as you wish.
